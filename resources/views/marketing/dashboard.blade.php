@@ -1,11 +1,18 @@
 <x-marketing-layout>
-@php
-    $title='Dashboard';
-    $subTitle = 'AI';
-    $script= '<script src="' . asset('assets/js/homeOneChart.js') . '"></script>';
-@endphp
-
-@section('content')
+      {{-- breadcrumb --}}
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+        <h6 class="font-semibold mb-0 dark:text-white">Dashboard</h6>
+        <ul class="flex items-center gap-[6px]">
+            <li class="font-medium">
+                <a href="/admin/dashboard" class="flex items-center gap-2 hover:text-primary-600 dark:text-white">
+                    <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+                    Dashboard
+                </a>
+            </li>
+            <li class="dark:text-white">-</li>
+            <li class="font-medium dark:text-white">Marketing</li>
+        </ul>
+    </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-6">
         <div class="card shadow-none border border-gray-200 dark:border-neutral-600 dark:bg-neutral-700 rounded-lg h-full bg-gradient-to-r from-cyan-600/10 to-bg-white">
@@ -645,5 +652,9 @@
             </div>
         </div>
     </div>
+
+    @push('js')
+
+    @endpush
 
 </x-marketing-layout>
