@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\CdnController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\DomainController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\ServerController;
+use App\Http\Controllers\Admin\WebKantorController;
 use App\Http\Controllers\Marketing\DashboardController as MarketingDashboard;
 use App\Http\Controllers\Client\DashboardController as ClientDashboard;
 use App\Http\Controllers\Investor\DashboardController as InvestorDashboard;
@@ -27,17 +32,38 @@ Route::get('/', function () {
             return redirect()->route('investor.dashboard');
         }
 
-        return redirect()->view('errors/pageError'); // fallback kalau role tidak dikenal
+        return redirect()->view('errors/404'); 
     }
 
     return redirect()->route('login'); // kalau belum login
 });
 
 
-
+// ================= MENU ADMIN =================
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Dashboard
     Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
-    Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
+
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
+
+        // ================= MANAJEMEN PROYEK =================
+        // Proyek
+        Route::resource('project', ProjectController::class);
+
+        // Web Kantor
+        Route::resource('webkantor', WebKantorController::class);
+
+        // Server
+        Route::resource('server', ServerController::class);
+
+        // Domain
+        Route::resource('domain', DomainController::class);
+
+        // CDN
+        Route::resource('cdn', CdnController::class);
+    });
 });
 
 Route::middleware(['auth', 'role:marketing'])->group(function () {

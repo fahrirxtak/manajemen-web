@@ -16,13 +16,7 @@
         <x-navbar />
         <!-- ..::  navbar end ::.. -->
         <div class="dashboard-main-body">
-
-            <!-- ..::  breadcrumb  start ::.. -->
-            <x-breadcrumb title='{{ isset($title) ? $title : "" }}' subTitle='{{ isset($subTitle) ? $subTitle : "" }}' />
-            <!-- ..::  header area end ::.. -->
-
             {{ $slot }}
-
         </div>
         <!-- ..::  footer  start ::.. -->
         <x-footer />
@@ -31,9 +25,10 @@
     </main>
 
     <!-- ..::  scripts  start ::.. -->
-    <x-script  script='{!! isset($script) ? $script : "" !!}' />
+    <x-script :scripts="['apexcharts', 'datatables', 'iconify', 'jquery-ui', 'vectormap', 'popup', 'slick', 'prism', 'file-upload', 'audioplayer', 'homeTwoChart']" :customScript="isset($script) ? $script : ''" />
     <!-- ..::  scripts  end ::.. -->
-    <script src="{{ asset('assets/js/homeTwoChart.js') }}"></script>
+
+    @stack('js')
 </body>
 
 </html>
